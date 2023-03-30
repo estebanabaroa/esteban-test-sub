@@ -1,3 +1,7 @@
+signer.json
+.plebbit
+.ipfs
+
 # Logs
 logs
 *.log
