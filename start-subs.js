@@ -3,7 +3,7 @@ const Plebbit = require('@plebbit/plebbit-js')
 const path = require('path')
 const startIpfs = require('./start-ipfs')
 const Logger = require('@plebbit/plebbit-logger')
-// Logger.enable('plebbit-js:*')
+Logger.enable('plebbit-js:*')
 
 const signersPath = path.join(__dirname, 'signers.json')
 if (!fs.existsSync(signersPath)) {
