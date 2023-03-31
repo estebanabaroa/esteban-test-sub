@@ -14,6 +14,7 @@ if (fs.existsSync(signersPath)) {
 
 ;(async () => {
   const plebbit = await Plebbit()
+  plebbit.on('error', error => console.warn(error.message))
   for (const settings of subplebbitSettings) {
     console.log(settings)
     const subplebbit = await plebbit.createSubplebbit({

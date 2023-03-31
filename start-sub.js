@@ -19,10 +19,16 @@ const ipfsConfig = {
 }
 
 ;(async () => {
-  await startIpfs(ipfsConfig)
+  try {
+    await startIpfs(ipfsConfig)
+  }
+  catch (e) {
+    console.warn(e.message)
+  }
   const plebbit = await Plebbit({
     ipfsHttpClientOptions: `http://localhost:${ipfsConfig.apiPort}/api/v0`
   })
+  plebbit.on('error', error => console.warn(error.message))
   const subplebbit = await plebbit.createSubplebbit({signer})
   await subplebbit.start()
   console.log('started', subplebbit.title, subplebbit.description, subplebbit.settings)
