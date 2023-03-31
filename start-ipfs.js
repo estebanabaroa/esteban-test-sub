@@ -32,6 +32,7 @@ const startIpfs = ({apiPort, gatewayPort, args = ''} = {}) => {
   ipfsProcess.on('error', console.error)
   ipfsProcess.on('exit', () => {
     console.error(`ipfs process with pid ${ipfsProcess.pid} exited`)
+    process.exit(1)
   })
   process.on('exit', () => {
     exec(`kill ${ipfsProcess.pid + 1}`)

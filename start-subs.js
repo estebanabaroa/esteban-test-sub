@@ -13,8 +13,8 @@ const signers = require(signersPath)
 console.log(Object.keys(signers))
 
 const ipfsConfig = {
-  apiPort: 45678,
-  gatewayPort: 44678,
+  apiPort: 45679,
+  gatewayPort: 44679,
   args: '--enable-pubsub-experiment --enable-namesys-pubsub',
 }
 
