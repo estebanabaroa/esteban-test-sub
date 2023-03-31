@@ -5,12 +5,12 @@ const startIpfs = require('./start-ipfs')
 const Logger = require('@plebbit/plebbit-logger')
 // Logger.enable('plebbit-js:*')
 
-const signerPath = path.join(__dirname, 'signer.json')
-if (!fs.existsSync(signerPath)) {
-  throw Error(`./signer.json doesn't exist, call 'node create-sub' first`)
+const signersPath = path.join(__dirname, 'signers.json')
+if (!fs.existsSync(signersPath)) {
+  throw Error(`./signers.json doesn't exist, call 'node create-subs' first`)
 }
-const signer = require(signerPath)
-console.log(signer.address)
+const signers = require(signersPath)
+console.log(Object.keys(signers))
 
 const ipfsConfig = {
   apiPort: 45678,
@@ -23,7 +23,9 @@ const ipfsConfig = {
   const plebbit = await Plebbit({
     ipfsHttpClientOptions: `http://localhost:${ipfsConfig.apiPort}/api/v0`
   })
-  const subplebbit = await plebbit.createSubplebbit({signer})
-  await subplebbit.start()
-  console.log('started', subplebbit.title, subplebbit.description, subplebbit.settings)
+  for (const subplebbitAddress in signers) {
+    const subplebbit = await plebbit.createSubplebbit({address: subplebbitAddress})
+    await subplebbit.start()
+    console.log('started', subplebbit.address, subplebbit.description, subplebbit.settings)
+  }
 })()
