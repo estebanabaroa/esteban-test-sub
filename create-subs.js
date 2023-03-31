@@ -27,5 +27,6 @@ if (fs.existsSync(signersPath)) {
     await subplebbit.edit({address: settings.address})
     console.log('edited address', subplebbit.address, subplebbit.title, subplebbit.description, subplebbit.settings)
   }
+
   fs.writeFileSync(signersPath, JSON.stringify(signers))
 })()
