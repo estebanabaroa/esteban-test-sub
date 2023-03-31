@@ -3,7 +3,7 @@ const Plebbit = require('@plebbit/plebbit-js')
 const path = require('path')
 const startIpfs = require('./start-ipfs')
 const Logger = require('@plebbit/plebbit-logger')
-Logger.enable('plebbit-js:*')
+// Logger.enable('plebbit-js:*')
 
 const signersPath = path.join(__dirname, 'signers.json')
 if (!fs.existsSync(signersPath)) {
@@ -19,12 +19,7 @@ const ipfsConfig = {
 }
 
 ;(async () => {
-  try {
-    await startIpfs(ipfsConfig)
-  }
-  catch (e) {
-    console.warn(e.message)
-  }
+  await startIpfs(ipfsConfig)
   const plebbit = await Plebbit({
     ipfsHttpClientOptions: `http://localhost:${ipfsConfig.apiPort}/api/v0`
   })
@@ -39,7 +34,7 @@ const ipfsConfig = {
   const signerPath = path.join(__dirname, 'signer.json')
   if (fs.existsSync(signerPath)) {
     const signer = require(signerPath)
-    const subplebbit = await plebbit.createSubplebbit({signer})
+    const subplebbit = await plebbit.createSubplebbit({address: signer.address})
     await subplebbit.start()
     console.log('started', subplebbit.title, subplebbit.description, subplebbit.settings)
   } 
